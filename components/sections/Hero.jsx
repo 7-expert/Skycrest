@@ -84,13 +84,13 @@ export default function Hero() {
         <div className="absolute inset-0 bg-grid-pattern opacity-15 pointer-events-none" />
       </div>
 
-      {/* Main Hero Content Frame (Left Aligned Layout) */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-left pt-28 pb-12 flex flex-col justify-between h-full max-h-[820px]">
+      {/* Main Hero Content Frame (Left Aligned Layout at Bottom) */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-left pt-28 pb-8 flex flex-col justify-end h-full">
         
-        <div className="my-auto max-w-5xl">
+        <div className="mt-auto mb-8 max-w-5xl">
           {/* Eyebrow Tag: ENGINEER. BUILDER. INNOVATOR. */}
-          <div ref={eyebrowRef} className="opacity-0 mb-4">
-            <span className="text-xs sm:text-sm font-mono font-extrabold tracking-[0.4em] text-amber-gold uppercase">
+          <div ref={eyebrowRef} className="opacity-0 mb-3">
+            <span className="text-xs sm:text-sm font-mono font-extrabold tracking-[0.3em] sm:tracking-[0.4em] text-amber-gold uppercase">
               ENGINEER. BUILDER. INNOVATOR.
             </span>
           </div>
@@ -98,21 +98,21 @@ export default function Hero() {
           {/* Main Headline: Large size, left aligned with POSSIBLE on next line */}
           <h1
             ref={headlineRef}
-            className="opacity-0 font-condensed font-black text-5xl sm:text-7xl lg:text-8xl tracking-tight uppercase leading-[0.93] mb-8 drop-shadow-2xl"
+            className="opacity-0 font-condensed font-black text-5xl sm:text-7xl lg:text-8xl tracking-tight uppercase leading-[0.9] mb-6 drop-shadow-2xl"
           >
             <span className="block text-white">LET'S REDEFINE</span>
             <span className="block text-amber-gold">POSSIBLE</span>
           </h1>
 
-          {/* Action CTAs: Left aligned */}
-          <div ref={ctaRef} className="flex flex-wrap items-center justify-start gap-4">
+          {/* Action CTAs: Full width on mobile for bold prominence */}
+          <div ref={ctaRef} className="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-3 sm:gap-4 w-full sm:w-auto">
             <a
               href="#projects"
               onClick={(e) => {
                 e.preventDefault();
                 document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="inline-flex items-center gap-3 bg-amber-gold hover:bg-amber-hover text-charcoal font-condensed font-black text-sm sm:text-base tracking-wider uppercase px-9 py-4 transition-all duration-200 shadow-2xl group"
+              className="inline-flex items-center justify-center gap-3 bg-amber-gold hover:bg-amber-hover text-charcoal font-condensed font-black text-base sm:text-lg tracking-wider uppercase px-8 sm:px-10 py-4 sm:py-4.5 transition-all duration-200 shadow-2xl group w-full sm:w-auto"
               id="hero-cta-explore-projects"
             >
               <span>EXPLORE PROJECTS</span>
@@ -125,7 +125,7 @@ export default function Hero() {
                 e.preventDefault();
                 document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="inline-flex items-center gap-3 bg-white/10 hover:bg-white text-white hover:text-charcoal border-2 border-white/80 font-condensed font-black text-sm sm:text-base tracking-wider uppercase px-9 py-4 transition-all duration-200 backdrop-blur-md"
+              className="inline-flex items-center justify-center gap-3 bg-white/10 hover:bg-white text-white hover:text-charcoal border-2 border-white/80 font-condensed font-black text-base sm:text-lg tracking-wider uppercase px-8 sm:px-10 py-4 sm:py-4.5 transition-all duration-200 backdrop-blur-md w-full sm:w-auto"
               id="hero-cta-get-in-touch"
             >
               <span>GET IN TOUCH</span>

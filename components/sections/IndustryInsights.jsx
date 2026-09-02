@@ -2,16 +2,16 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { 
-  Calendar, 
-  Clock, 
-  ArrowUpRight, 
-  Sparkles, 
-  X, 
-  Share2, 
-  Check, 
-  TrendingUp, 
-  SlidersHorizontal, 
+import {
+  Calendar,
+  Clock,
+  ArrowUpRight,
+  Sparkles,
+  X,
+  Share2,
+  Check,
+  TrendingUp,
+  SlidersHorizontal,
   Send
 } from 'lucide-react';
 import { gsap } from '@/lib/gsap';
@@ -123,8 +123,8 @@ export default function IndustryInsights() {
   const [newsletterSubscribed, setNewsletterSubscribed] = useState(false);
 
   // Filtered articles logic
-  const filteredArticles = activeCategory === 'ALL UPDATES' 
-    ? ARTICLES 
+  const filteredArticles = activeCategory === 'ALL UPDATES'
+    ? ARTICLES
     : ARTICLES.filter(a => a.category === activeCategory);
 
   // GSAP Entrance animation
@@ -167,20 +167,20 @@ export default function IndustryInsights() {
   };
 
   return (
-    <section 
-      id="insights" 
-      ref={sectionRef} 
+    <section
+      id="insights"
+      ref={sectionRef}
       className="relative bg-white text-charcoal py-24 sm:py-32 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header Frame */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 pb-6 border-b border-gray-100 gap-6">
-          
+
           <div className="max-w-3xl">
             {/* Eyebrow badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-gold/10 rounded-full mb-4">
-              <span className="w-2 h-2 rounded-full bg-amber-gold animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-gold/10 rounded-md mb-4">
+              <span className="w-2 h-2 bg-amber-gold inline-block" />
               <span className="text-xs font-mono font-bold tracking-[0.25em] text-amber-hover uppercase">
                 :: LATEST NEWS
               </span>
@@ -217,11 +217,10 @@ export default function IndustryInsights() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-4 py-2 text-xs font-mono font-bold uppercase tracking-wider rounded-lg whitespace-nowrap transition-all duration-300 ${
-                  isActive
+                className={`px-4 py-2 text-xs font-mono font-bold uppercase tracking-wider rounded-lg whitespace-nowrap transition-all duration-300 ${isActive
                     ? 'bg-amber-gold text-charcoal font-black shadow-md shadow-amber-gold/20 scale-[1.02]'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-charcoal'
-                }`}
+                  }`}
               >
                 {cat}
               </button>
@@ -248,7 +247,7 @@ export default function IndustryInsights() {
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
-                  
+
                   {/* Category Pill Tag */}
                   <div className="absolute top-4 left-4 z-10">
                     <span className="inline-block px-3 py-1 bg-charcoal/85 backdrop-blur-md text-[10px] font-mono font-bold text-amber-gold tracking-wider uppercase rounded-md shadow-sm">
@@ -310,7 +309,7 @@ export default function IndustryInsights() {
         {/* Newsletter Subscription Strip */}
         <div className="mt-16 relative bg-charcoal text-off-white rounded-2xl p-8 sm:p-10 overflow-hidden shadow-xl">
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
+
             <div className="lg:col-span-7">
               <div className="inline-flex items-center gap-2 text-xs font-mono text-amber-gold tracking-widest uppercase mb-2">
                 <Sparkles className="w-4 h-4" />
@@ -361,9 +360,9 @@ export default function IndustryInsights() {
       {/* ARTICLE FULL MODAL / DRAWER */}
       {activeModalArticle && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-10 bg-black/70 backdrop-blur-md animate-fade-in">
-          
+
           <div className="relative w-full max-w-4xl max-h-[90vh] bg-white text-charcoal rounded-2xl shadow-2xl overflow-hidden flex flex-col my-auto">
-            
+
             {/* Modal Header Bar */}
             <div className="sticky top-0 z-20 flex items-center justify-between px-6 py-4 bg-white/95 backdrop-blur-md border-b border-gray-100">
               <div className="flex items-center gap-3">
@@ -397,7 +396,7 @@ export default function IndustryInsights() {
 
             {/* Modal Scrollable Body */}
             <div className="overflow-y-auto p-6 sm:p-8 space-y-6">
-              
+
               {/* Header Titles */}
               <div>
                 <div className="flex items-center gap-2 text-xs font-mono text-amber-hover mb-2">
@@ -437,7 +436,7 @@ export default function IndustryInsights() {
               )}
 
               {/* Rich HTML Content */}
-              <div 
+              <div
                 className="text-gray-700 text-sm sm:text-base leading-relaxed space-y-4 font-body border-t border-gray-100 pt-6"
                 dangerouslySetInnerHTML={{ __html: activeModalArticle.fullContent }}
               />

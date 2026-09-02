@@ -14,6 +14,12 @@ export default function SmoothScroll({ children }) {
       try {
         const LocomotiveScroll = (await import('locomotive-scroll')).default;
         locoScroll = new LocomotiveScroll();
+
+        // Refresh GSAP ScrollTrigger so triggers recalculate layout correctly
+        const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+        setTimeout(() => {
+          ScrollTrigger.refresh();
+        }, 150);
       } catch (err) {
         console.warn('Locomotive Scroll init fallback:', err);
       }

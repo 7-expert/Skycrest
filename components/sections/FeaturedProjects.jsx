@@ -218,18 +218,18 @@ export default function FeaturedProjects() {
 
   return (
     <section id="projects" ref={sectionRef} className="relative bg-charcoal-dark text-off-white pt-20 pb-6 border-b border-steel-border/60">
-      
+
       {/* Background Structural Pattern */}
       <div className="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none" />
       <div className="absolute top-0 left-0 w-full h-[3px] bg-amber-gold/40" />
 
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-8 border-b border-steel-border/40 gap-6">
           <div>
             <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-[0.3em] text-amber-gold uppercase mb-2">
-              <span className="w-2.5 h-2.5 bg-amber-gold rounded-full animate-pulse" />
+              <span className="w-2.5 h-2.5 bg-amber-gold inline-block" />
               <span>SKY CREST PORTFOLIO // DUBAI, UAE</span>
             </div>
             <h2 className="font-condensed font-black text-4xl sm:text-6xl tracking-tight uppercase text-white leading-none">
@@ -240,17 +240,16 @@ export default function FeaturedProjects() {
             </p>
           </div>
 
-          {/* Filter Tabs */}
-          <div className="flex flex-wrap gap-2">
+          {/* Filter Tabs - Mobile Horizontally Scrollable */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0 sm:flex-wrap no-scrollbar w-full md:w-auto">
             {CATEGORIES.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`text-xs font-condensed font-extrabold tracking-wider uppercase px-5 py-2.5 rounded-full transition-all duration-200 ${
-                  activeCategory === cat
+                className={`text-xs font-condensed font-extrabold tracking-wider uppercase px-4 py-2.5 rounded-xl whitespace-nowrap transition-all duration-200 shrink-0 ${activeCategory === cat
                     ? 'bg-amber-gold text-charcoal shadow-lg shadow-amber-gold/20 scale-105'
                     : 'bg-charcoal border border-steel-border/80 text-mid-gray hover:text-white hover:border-steel-border'
-                }`}
+                  }`}
                 id={`filter-tab-${cat.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
               >
                 {cat}
@@ -259,38 +258,68 @@ export default function FeaturedProjects() {
           </div>
         </div>
 
-        {/* Masonry Pinterest Grid - Compact Bottom Gap & Slightly Increased Border Radius */}
+        {/* Universal Clean Grid - Mobile (1 col), Tablet (2 cols), Desktop/Laptop (3 cols) */}
         <div
           ref={gridRef}
-          className="columns-1 sm:columns-2 lg:columns-3 gap-3 space-y-3"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch"
         >
           {filteredProjects.map((project) => (
             <div
               key={project.id}
               onClick={() => setSelectedProject(project)}
-              className="break-inside-avoid relative rounded-xl overflow-hidden bg-charcoal-card shadow-xl group cursor-pointer transition-all duration-300 hover:-translate-y-1"
+              className="relative rounded-2xl overflow-hidden bg-charcoal-card border border-steel-border/60 shadow-xl group cursor-pointer transition-all duration-300 hover:border-amber-gold hover:-translate-y-1 flex flex-col justify-between h-full"
             >
-              {/* Full Natural Size Image Container (No Badges, Maximum Image Visibility) */}
-              <div className="relative w-full overflow-hidden">
+              {/* Image Container with Consistent Height Across All Devices */}
+              <div className="relative w-full h-56 sm:h-64 lg:h-72 overflow-hidden bg-charcoal shrink-0">
                 <Image
                   src={project.image}
                   alt={project.title}
-                  width={900}
-                  height={1200}
-                  className="w-full h-auto block object-cover filter contrast-[1.05] brightness-[0.95] group-hover:scale-105 transition-transform duration-500 ease-out"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover object-center filter contrast-[1.05] brightness-[0.95] group-hover:scale-105 transition-transform duration-500 ease-out"
                 />
 
                 {/* Gradient Dark Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/20 to-transparent opacity-85 group-hover:opacity-95 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
 
-                {/* Single-Line Heading Overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
+                {/* Top Left Tag: Highlight Pill */}
+                <div className="absolute top-3.5 left-3.5 z-20">
+                  <span className="inline-block px-3 py-1 bg-black/85 backdrop-blur-md text-[10px] sm:text-xs font-mono font-bold text-amber-gold tracking-wider uppercase rounded-md border border-white/10 shadow-lg">
+                    {project.highlight}
+                  </span>
+                </div>
+
+                {/* Location Badge */}
+                <div className="absolute top-3.5 right-3.5 z-20">
+                  <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-black/85 backdrop-blur-md text-[10px] font-mono text-mid-gray rounded-md border border-white/10 shadow-lg">
+                    <MapPin className="w-3 h-3 text-amber-gold" />
+                    {project.location}
+                  </span>
+                </div>
+              </div>
+
+              {/* Bottom Content Area: Heading & Button */}
+              <div className="p-5 sm:p-6 bg-charcoal-card flex flex-col justify-between flex-grow gap-4">
+                <div>
+                  <div className="text-[10px] sm:text-xs font-mono text-amber-gold font-bold tracking-widest uppercase mb-1.5">
+                    {project.category}
+                  </div>
                   <h3
-                    className="font-condensed font-black text-lg sm:text-xl text-white uppercase truncate leading-tight group-hover:text-amber-gold transition-colors drop-shadow-lg"
+                    className="font-condensed font-extrabold text-base sm:text-lg lg:text-xl text-white uppercase line-clamp-2 leading-snug group-hover:text-amber-gold transition-colors"
                     title={project.title}
                   >
                     {project.title}
                   </h3>
+                </div>
+
+                {/* Bottom Action Button Bar */}
+                <div className="flex items-center justify-between pt-3 border-t border-steel-border/50">
+                  <span className="text-xs font-condensed font-extrabold tracking-wider text-amber-gold group-hover:text-white uppercase transition-colors">
+                    VIEW PROJECT SPECS
+                  </span>
+                  <div className="w-9 h-9 rounded-full bg-charcoal border border-steel-border flex items-center justify-center text-white group-hover:bg-amber-gold group-hover:text-charcoal group-hover:border-amber-gold transition-all duration-300 shadow-md">
+                    <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -310,7 +339,7 @@ export default function FeaturedProjects() {
           >
             <button
               onClick={() => setSelectedProject(null)}
-              className="absolute top-6 right-6 bg-charcoal p-2.5 rounded-full text-white hover:text-amber-gold transition-colors z-30 shadow-lg"
+              className="absolute top-6 right-6 bg-charcoal p-2.5 rounded-xl text-white hover:text-amber-gold transition-colors z-30 shadow-lg"
               id="close-project-modal"
             >
               <X className="w-5 h-5" />
@@ -365,7 +394,7 @@ export default function FeaturedProjects() {
               <a
                 href="#contact"
                 onClick={() => setSelectedProject(null)}
-                className="inline-flex items-center gap-2 bg-amber-gold text-charcoal font-condensed font-black text-sm tracking-wider uppercase px-6 py-3 rounded-full hover:bg-white transition-colors"
+                className="inline-flex items-center gap-2 bg-amber-gold text-charcoal font-condensed font-black text-sm tracking-wider uppercase px-6 py-3 rounded-xl hover:bg-white transition-colors"
               >
                 <span>CONTACT FOR SIMILAR PROJECTS</span>
                 <ArrowUpRight className="w-4 h-4" />

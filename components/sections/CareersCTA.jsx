@@ -7,7 +7,7 @@ export default function CareersCTA() {
     <section className="relative bg-gradient-to-r from-charcoal-dark via-charcoal to-charcoal-card py-24 border-b border-steel-border/80 overflow-hidden">
       {/* Background Accent Grid */}
       <div className="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none" />
-      <div className="absolute top-0 right-0 w-96 h-96 bg-amber-gold/5 blur-3xl rounded-full pointer-events-none" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-amber-gold/5 blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-charcoal-card border-2 border-amber-gold p-8 sm:p-14 flex flex-col lg:flex-row lg:items-center justify-between gap-8 shadow-2xl">

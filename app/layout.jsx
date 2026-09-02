@@ -21,6 +21,11 @@ export const metadata = {
   description: 'Skycrest is an international leader in large-scale commercial high-rise, heavy industrial energy plants, civil transportation, and infrastructure engineering.',
   keywords: ['Skycrest Construction', 'Heavy Industry', 'Infrastructure Engineering', 'EPC Construction', 'Commercial High-Rise', 'Industrial Engineering'],
   authors: [{ name: 'Skycrest Engineering Group' }],
+  icons: {
+    icon: '/icon.png',
+    shortcut: '/icon.png',
+    apple: '/icon.png',
+  },
   openGraph: {
     title: 'Skycrest | Global Heavy Engineering & Infrastructure Construction',
     description: 'Engineering excellence at monumental scale. Turnkey EPC solutions across commercial, industrial, and civil infrastructure sectors.',
@@ -28,7 +33,7 @@ export const metadata = {
     siteName: 'Skycrest Corporate',
     images: [
       {
-        url: '/images/hero.jpg',
+        url: '/icon.png',
         width: 1200,
         height: 630,
         alt: 'Skycrest Heavy Construction Project Site',
@@ -42,6 +47,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${barlowCondensed.variable} ${inter.variable}`} suppressHydrationWarning>
+      <head>
+        <link rel="icon" href="/icon.png?v=2" type="image/png" />
+        <link rel="shortcut icon" href="/icon.png?v=2" type="image/png" />
+        <link rel="apple-touch-icon" href="/icon.png?v=2" />
+      </head>
       <body className="bg-charcoal text-off-white font-body antialiased selection:bg-amber-gold selection:text-charcoal" suppressHydrationWarning>
         {children}
       </body>

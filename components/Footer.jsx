@@ -12,23 +12,21 @@ export default function Footer() {
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Top Header Row: Logo & Tagline */}
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 mb-12 sm:mb-16">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-6">
-            {/* Logo 2 Image */}
-            <div className="relative shrink-0">
-              <Image 
-                src="/logo2.png" 
-                alt="Skycrest Logo" 
-                width={220} 
-                height={70} 
-                className="h-12 sm:h-16 w-auto object-contain filter brightness-110"
-              />
-            </div>
+        {/* Top Header Row: Logo & Tagline (Left Aligned) */}
+        <div className="flex flex-col gap-6 mb-12 sm:mb-16">
+          {/* Logo 2 Image */}
+          <div className="relative shrink-0 w-max">
+            <Image 
+              src="/logo2.png" 
+              alt="Skycrest Logo" 
+              width={220} 
+              height={70} 
+              className="h-12 sm:h-16 w-auto object-contain filter brightness-110"
+            />
           </div>
 
           {/* Main Tagline */}
-          <h2 className="font-condensed font-black text-3xl sm:text-5xl lg:text-6xl uppercase tracking-tight text-white">
+          <h2 className="font-condensed font-black text-3xl sm:text-5xl lg:text-6xl uppercase tracking-tight text-white max-w-2xl">
             LET'S REDEFINE POSSIBLE<sup className="text-sm font-sans font-normal ml-0.5">®</sup>
           </h2>
         </div>

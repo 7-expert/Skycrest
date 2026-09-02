@@ -45,27 +45,31 @@ const FEATURES = [
 export default function WhyChooseUs() {
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
+  const statsBarRef = useRef(null);
   const statsRef = useRef([]);
+  const cardsGridRef = useRef(null);
   const cardsRef = useRef([]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Header Entrance Animation
-      gsap.fromTo(
-        headerRef.current,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 80%',
-            toggleActions: 'play none none none',
-          },
-        }
-      );
+      if (headerRef.current) {
+        gsap.fromTo(
+          headerRef.current,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: headerRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      }
 
       // Stats Bar Stagger Animation
       if (statsRef.current.length > 0) {
@@ -79,16 +83,16 @@ export default function WhyChooseUs() {
             stagger: 0.1,
             ease: 'power3.out',
             scrollTrigger: {
-              trigger: sectionRef.current,
-              start: 'top 75%',
+              trigger: statsBarRef.current || sectionRef.current,
+              start: 'top 85%',
               toggleActions: 'play none none none',
             },
           }
         );
       }
 
-      // Feature Cards Stagger Animation
-      if (cardsRef.current.length > 0) {
+      // Feature Cards Stagger Animation (Triggered directly on cards grid container)
+      if (cardsRef.current.length > 0 && cardsGridRef.current) {
         gsap.fromTo(
           cardsRef.current.filter(Boolean),
           { opacity: 0, y: 35 },
@@ -99,8 +103,8 @@ export default function WhyChooseUs() {
             stagger: 0.12,
             ease: 'power3.out',
             scrollTrigger: {
-              trigger: sectionRef.current,
-              start: 'top 65%',
+              trigger: cardsGridRef.current,
+              start: 'top 85%',
               toggleActions: 'play none none none',
             },
           }
@@ -119,8 +123,6 @@ export default function WhyChooseUs() {
     >
       {/* Background Subtle Grid Pattern */}
       <div className="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none" />
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-amber-gold/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-10 w-96 h-96 bg-amber-gold/5 rounded-full blur-3xl pointer-events-none" />
 
       {/* Top Accent Amber Line */}
       <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-amber-gold/60 to-transparent" />
@@ -131,7 +133,7 @@ export default function WhyChooseUs() {
         <div ref={headerRef} className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-8 border-b border-steel-border/50 gap-6">
           <div>
             <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-[0.25em] text-amber-gold uppercase mb-3">
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-gold animate-pulse inline-block" />
+              <span className="w-2.5 h-2.5 bg-amber-gold inline-block" />
               <span>:: THE SKYCREST DIFFERENCE</span>
             </div>
             <h2 className="font-condensed font-extrabold text-4xl sm:text-6xl tracking-tight uppercase leading-none text-off-white">
@@ -144,7 +146,7 @@ export default function WhyChooseUs() {
         </div>
 
         {/* Original Stat Metrics Counter Bar Strip */}
-        <div className="relative mb-20 py-10 bg-charcoal-card border-y-2 border-amber-gold/80 rounded-xl overflow-hidden shadow-2xl">
+        <div ref={statsBarRef} className="relative mb-20 py-10 bg-charcoal-card border-y-2 border-amber-gold/80 rounded-xl overflow-hidden shadow-2xl">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 px-6 text-center">
             {STATS.map((stat, idx) => (
               <div
@@ -163,8 +165,8 @@ export default function WhyChooseUs() {
           </div>
         </div>
 
-        {/* 4 Feature Cards Grid - Ultra Clean Dark Industrial UI/UX */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* 4 Feature Cards Grid */}
+        <div ref={cardsGridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {FEATURES.map((feat, idx) => {
             const Icon = feat.icon;
             return (
@@ -200,7 +202,6 @@ export default function WhyChooseUs() {
                   <span className="text-[10px] font-mono tracking-widest text-amber-gold uppercase">
                     {feat.tag}
                   </span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-gold/40 group-hover:bg-amber-gold transition-colors" />
                 </div>
               </div>
             );
@@ -211,3 +212,4 @@ export default function WhyChooseUs() {
     </section>
   );
 }
+

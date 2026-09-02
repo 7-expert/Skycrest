@@ -69,10 +69,10 @@ export default function AboutStrip() {
 
       <div className="max-w-8xl mx-auto px-6 lg:px-12 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          
+
           {/* Left Column: Black Heading + Script Highlight Heading + Clean Copy */}
           <div className="lg:col-span-6 flex flex-col justify-center">
-            
+
             {/* Heading 1: Whole Black Heading */}
             <h2 className="font-condensed font-black text-4xl sm:text-5xl lg:text-6xl tracking-tight uppercase leading-[0.95] text-charcoal mb-8">
               BUILT FOR CRITICAL SCALE &amp; PRECISION.
@@ -123,9 +123,6 @@ export default function AboutStrip() {
 
           {/* Right Column: Pinterest-Inspired Floating Image & Badge Mosaic */}
           <div className="lg:col-span-6 relative min-h-[500px] sm:min-h-[560px] flex items-center justify-center pt-8 lg:pt-0">
-            
-            {/* Background Structural Grid Circle */}
-            <div className="absolute w-[420px] h-[420px] rounded-full border-2 border-dashed border-charcoal/10 animate-[spin_60s_linear_infinite] pointer-events-none" />
 
             {/* Mosaic Card 1: Main Building */}
             <div
@@ -140,7 +137,7 @@ export default function AboutStrip() {
                 className="object-cover object-center filter contrast-[1.05] group-hover:scale-110 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-transparent to-transparent" />
-              
+
               {/* Badge Overlay */}
               <div className="absolute bottom-4 left-4 right-4 bg-charcoal/90 backdrop-blur-md p-3 rounded-xl border border-steel-border/50 text-off-white">
                 <div className="text-[9px] font-mono text-amber-gold tracking-widest uppercase">LOCATION: DUBAI, UAE</div>
@@ -161,7 +158,7 @@ export default function AboutStrip() {
                 className="object-cover object-center filter contrast-[1.15] group-hover:scale-110 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-transparent to-transparent" />
-              
+
               <div className="absolute bottom-3 left-3 right-3 bg-amber-gold p-2.5 rounded-lg text-charcoal flex items-center justify-between">
                 <div>
                   <div className="text-[8px] font-mono font-bold tracking-widest uppercase">EXPERT EXECUTION</div>
