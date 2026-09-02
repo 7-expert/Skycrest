@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Caveat:wght@600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-charcoal: #2A2E2F;
+  --color-charcoal-dark: #1E2122;
+  --color-charcoal-card: #222627;
+  --color-amber-gold: #F8B04C;
+  --color-amber-hover: #E09A36;
+  --color-off-white: #F5F4F1;
+  --color-off-white-dark: #EBE9E4;
+  --color-mid-gray: #8E9396;
+  --color-steel-border: #3A3F41;
+
+  --font-condensed: 'Barlow Condensed', 'Cabinet Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+:root {
+  --background: #2A2E2F;
+  --foreground: #F5F4F1;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #2A2E2F;
+  color: #F5F4F1;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar for Heavy Industrial Feel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1E2122;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3A3F41;
+  border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #F8B04C;
+}
+
+/* Selection */
+::selection {
+  background: #F8B04C;
+  color: #2A2E2F;
+}
+
+/* Industrial Font Utilities */
+.font-condensed {
+  font-family: var(--font-condensed), sans-serif;
+}
+
+.font-script {
+  font-family: 'Caveat', cursive;
+}
+
+/* Clip path wipe utilities for GSAP triggers */
+.clip-wipe-bottom {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.clip-wipe-hidden {
+  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+}
+
+/* Industrial Structural Lines */
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+.bg-grid-pattern-dark {
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(42, 46, 47, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(42, 46, 47, 0.08) 1px, transparent 1px);
+}
