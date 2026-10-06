@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import {
   Calendar,
@@ -15,6 +16,7 @@ import {
   Send
 } from 'lucide-react';
 import { gsap } from '@/lib/gsap';
+import { useModalScrollLock } from '@/components/SmoothScroll';
 
 const CATEGORIES = [
   'ALL UPDATES',
@@ -116,16 +118,50 @@ const ARTICLES = [
 export default function IndustryInsights() {
   const sectionRef = useRef(null);
   const cardsRef = useRef([]);
+  const triggerRef = useRef(null);
+  const closeBtnRef = useRef(null);
+
   const [activeCategory, setActiveCategory] = useState('ALL UPDATES');
   const [activeModalArticle, setActiveModalArticle] = useState(null);
   const [copiedLink, setCopiedLink] = useState(false);
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterSubscribed, setNewsletterSubscribed] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useModalScrollLock(!!activeModalArticle);
 
   // Filtered articles logic
   const filteredArticles = activeCategory === 'ALL UPDATES'
     ? ARTICLES
     : ARTICLES.filter(a => a.category === activeCategory);
+
+  useEffect(() => {
+    if (activeModalArticle) {
+      triggerRef.current = document.activeElement;
+      const handleKeyDown = (e) => {
+        if (e.key === 'Escape') {
+          setActiveModalArticle(null);
+        }
+      };
+      window.addEventListener('keydown', handleKeyDown);
+
+      const timer = setTimeout(() => {
+        closeBtnRef.current?.focus();
+      }, 50);
+
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+        clearTimeout(timer);
+        if (triggerRef.current) {
+          triggerRef.current.focus();
+        }
+      };
+    }
+  }, [activeModalArticle]);
 
   // GSAP Entrance animation
   useEffect(() => {
@@ -358,11 +394,26 @@ export default function IndustryInsights() {
       </div>
 
       {/* ARTICLE FULL MODAL / DRAWER */}
-      {activeModalArticle && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-10 bg-black/70 backdrop-blur-md animate-fade-in">
-
-          <div className="relative w-full max-w-4xl max-h-[90vh] bg-white text-charcoal rounded-2xl shadow-2xl overflow-hidden flex flex-col my-auto">
-
+      {mounted && activeModalArticle && createPortal(
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 lg:p-10 bg-black/70 backdrop-blur-md animate-fade-in overflow-y-auto overscroll-contain"
+          onClick={() => setActiveModalArticle(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-article-title"
+          data-lenis-prevent="true"
+          data-lenis-prevent-wheel="true"
+          data-lenis-prevent-touch="true"
+          data-scroll-lock-scrollable="true"
+        >
+          <div
+            className="relative w-full max-w-4xl max-h-[100dvh] sm:max-h-[90vh] bg-white text-charcoal rounded-2xl shadow-2xl overflow-hidden flex flex-col my-auto overscroll-contain"
+            onClick={(e) => e.stopPropagation()}
+            data-lenis-prevent="true"
+            data-lenis-prevent-wheel="true"
+            data-lenis-prevent-touch="true"
+            data-scroll-lock-scrollable="true"
+          >
             {/* Modal Header Bar */}
             <div className="sticky top-0 z-20 flex items-center justify-between px-6 py-4 bg-white/95 backdrop-blur-md border-b border-gray-100">
               <div className="flex items-center gap-3">
@@ -377,7 +428,7 @@ export default function IndustryInsights() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleCopyLink}
-                  className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 transition-all text-xs font-mono flex items-center gap-1.5"
+                  className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 transition-all text-xs font-mono flex items-center gap-1.5 cursor-pointer"
                   title="Copy link"
                 >
                   {copiedLink ? <Check className="w-4 h-4 text-emerald-600" /> : <Share2 className="w-4 h-4" />}
@@ -385,9 +436,11 @@ export default function IndustryInsights() {
                 </button>
 
                 <button
+                  ref={closeBtnRef}
                   onClick={() => setActiveModalArticle(null)}
-                  className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 transition-all"
+                  className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 transition-all cursor-pointer"
                   title="Close modal"
+                  aria-label="Close modal"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -395,7 +448,14 @@ export default function IndustryInsights() {
             </div>
 
             {/* Modal Scrollable Body */}
-            <div className="overflow-y-auto p-6 sm:p-8 space-y-6">
+            <div
+              className="overflow-y-auto overscroll-contain p-6 sm:p-8 space-y-6"
+              data-lenis-prevent="true"
+              data-lenis-prevent-wheel="true"
+              data-lenis-prevent-touch="true"
+              data-scroll-lock-scrollable="true"
+              style={{ WebkitOverflowScrolling: 'touch' }}
+            >
 
               {/* Header Titles */}
               <div>
@@ -404,7 +464,7 @@ export default function IndustryInsights() {
                   <span>Published {activeModalArticle.date}</span>
                 </div>
 
-                <h2 className="text-2xl sm:text-4xl font-condensed font-extrabold text-charcoal leading-tight">
+                <h2 id="modal-article-title" className="text-2xl sm:text-4xl font-condensed font-extrabold text-charcoal leading-tight">
                   {activeModalArticle.title}
                 </h2>
 
@@ -453,7 +513,7 @@ export default function IndustryInsights() {
               <span className="text-gray-500">Sky Crest Building Contracting LLC • Dubai, UAE</span>
               <button
                 onClick={() => setActiveModalArticle(null)}
-                className="px-5 py-2 bg-amber-gold hover:bg-amber-hover text-charcoal font-bold rounded-lg transition-colors"
+                className="px-5 py-2 bg-amber-gold hover:bg-amber-hover text-charcoal font-bold rounded-lg transition-colors cursor-pointer"
               >
                 Close Article
               </button>
@@ -461,7 +521,8 @@ export default function IndustryInsights() {
 
           </div>
 
-        </div>
+        </div>,
+        document.body
       )}
 
     </section>

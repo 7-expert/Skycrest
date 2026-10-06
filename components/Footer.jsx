@@ -27,7 +27,7 @@ export default function Footer() {
 
           {/* Main Tagline */}
           <h2 className="font-condensed font-black text-3xl sm:text-5xl lg:text-6xl uppercase tracking-tight text-white max-w-2xl">
-            LET'S REDEFINE POSSIBLE<sup className="text-sm font-sans font-normal ml-0.5">®</sup>
+            LET&apos;S REDEFINE POSSIBLE<sup className="text-sm font-sans font-normal ml-0.5">®</sup>
           </h2>
         </div>
 
@@ -35,32 +35,74 @@ export default function Footer() {
         <nav aria-label="Footer Navigation" className="mb-8">
           <ul className="flex flex-wrap items-center gap-6 sm:gap-10 text-sm sm:text-base font-condensed font-bold text-white uppercase tracking-wider">
             <li>
-              <a href="#about" className="hover:text-amber-gold transition-colors">
+              <a 
+                href="#about" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="hover:text-amber-gold transition-colors"
+              >
                 About Us
               </a>
             </li>
             <li>
-              <a href="#services" className="hover:text-amber-gold transition-colors">
+              <a 
+                href="#contact" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.dispatchEvent(new CustomEvent('open-contact-modal'));
+                }}
+                className="hover:text-amber-gold transition-colors cursor-pointer"
+              >
                 Locations
               </a>
             </li>
             <li>
-              <a href="#projects" className="hover:text-amber-gold transition-colors">
+              <a 
+                href="#projects" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="hover:text-amber-gold transition-colors cursor-pointer"
+              >
                 Projects
               </a>
             </li>
             <li>
-              <a href="#careers" className="hover:text-amber-gold transition-colors">
+              <a 
+                href="#contact" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.dispatchEvent(new CustomEvent('open-contact-modal'));
+                }}
+                className="hover:text-amber-gold transition-colors cursor-pointer"
+              >
                 Careers
               </a>
             </li>
             <li>
-              <a href="#why-choose-us" className="hover:text-amber-gold transition-colors">
+              <a 
+                href="#contact" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.dispatchEvent(new CustomEvent('open-contact-modal'));
+                }}
+                className="hover:text-amber-gold transition-colors cursor-pointer"
+              >
                 Headquarters
               </a>
             </li>
             <li>
-              <a href="#contact" className="hover:text-amber-gold transition-colors">
+              <a 
+                href="#contact" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.dispatchEvent(new CustomEvent('open-contact-modal'));
+                }}
+                className="hover:text-amber-gold transition-colors cursor-pointer"
+              >
                 Contact
               </a>
             </li>
@@ -114,22 +156,6 @@ export default function Footer() {
             <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
               <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
             </svg>
-          </a>
-        </div>
-
-        {/* Secondary Policy Links */}
-        <div className="flex flex-wrap items-center gap-6 text-xs font-mono text-gray-300 underline underline-offset-4 mb-8">
-          <a href="#" className="hover:text-amber-gold transition-colors">
-            Code of Ethics
-          </a>
-          <a href="#" className="hover:text-amber-gold transition-colors">
-            Privacy Policy
-          </a>
-          <a href="#" className="hover:text-amber-gold transition-colors">
-            InfoCentre 4.0
-          </a>
-          <a href="#" className="hover:text-amber-gold transition-colors">
-            InfoCentre Enhancement
           </a>
         </div>
 

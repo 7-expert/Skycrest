@@ -4,11 +4,14 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronDown, X, Menu, MapPin } from 'lucide-react';
+import { useModalScrollLock } from '@/components/SmoothScroll';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  useModalScrollLock(mobileOpen);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,6 +25,10 @@ export default function Navbar() {
     e.preventDefault();
     setActiveDropdown(null);
     setMobileOpen(false);
+    if (href === '#contact') {
+      window.dispatchEvent(new CustomEvent('open-contact-modal'));
+      return;
+    }
     const target = document.querySelector(href);
     if (target) {
       target.scrollIntoView({ behavior: 'smooth' });
@@ -306,7 +313,14 @@ export default function Navbar() {
 
       {/* Mobile Navigation Drawer */}
       {mobileOpen && (
-        <div className="lg:hidden bg-charcoal-dark border-b border-steel-border px-6 py-6 space-y-4">
+        <div
+          className="lg:hidden bg-charcoal-dark border-b border-steel-border px-6 py-6 space-y-4 max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain"
+          data-lenis-prevent="true"
+          data-lenis-prevent-wheel="true"
+          data-lenis-prevent-touch="true"
+          data-scroll-lock-scrollable="true"
+          style={{ WebkitOverflowScrolling: 'touch' }}
+        >
           <a
             href="#about"
             onClick={(e) => scrollToSection(e, '#about')}

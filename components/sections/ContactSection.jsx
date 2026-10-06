@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle2, Building, ShieldCheck } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle2, Building, AlertCircle, Loader2 } from 'lucide-react';
 
 const PROJECT_TYPES = [
   'Commercial & High-Rise Infrastructure',
@@ -40,27 +40,51 @@ export default function ContactSection() {
     name: '',
     email: '',
     phone: '',
-    projectType: PROJECT_TYPES[0],
-    budget: '',
+    subject: PROJECT_TYPES[0],
     message: '',
+    website: '', // Honeypot field
   });
 
+  const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
+    setLoading(true);
+    setErrorMsg('');
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to submit inquiry.');
+      }
+
+      setSubmitted(true);
       setFormData({
         name: '',
         email: '',
         phone: '',
-        projectType: PROJECT_TYPES[0],
-        budget: '',
+        subject: PROJECT_TYPES[0],
         message: '',
+        website: '',
       });
-    }, 5000);
+
+      setTimeout(() => {
+        setSubmitted(false);
+      }, 6000);
+    } catch (err) {
+      setErrorMsg(err.message || 'An error occurred. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -88,6 +112,13 @@ export default function ContactSection() {
               OFFICIAL INQUIRY FORM
             </div>
 
+            {errorMsg && (
+              <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 text-xs font-mono flex items-center gap-3">
+                <AlertCircle className="w-5 h-5 text-red-500 shrink-0" />
+                <span>{errorMsg}</span>
+              </div>
+            )}
+
             {submitted ? (
               <div className="p-8 bg-amber-gold/10 border border-amber-gold text-charcoal flex flex-col items-center text-center my-8">
                 <CheckCircle2 className="w-12 h-12 text-amber-hover mb-4" />
@@ -98,6 +129,17 @@ export default function ContactSection() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Honeypot field hidden from real users */}
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={formData.website}
+                  onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                  className="hidden shrink-0 w-0 h-0 p-0 m-0 border-0 opacity-0 pointer-events-none"
+                />
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="contact-name" className="block text-xs font-condensed font-bold text-charcoal tracking-wider uppercase mb-2">
@@ -107,6 +149,7 @@ export default function ContactSection() {
                       id="contact-name"
                       type="text"
                       required
+                      maxLength={100}
                       placeholder="e.g. Robert Sterling"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -122,6 +165,7 @@ export default function ContactSection() {
                       id="contact-email"
                       type="email"
                       required
+                      maxLength={255}
                       placeholder="r.sterling@enterprise.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -138,6 +182,7 @@ export default function ContactSection() {
                     <input
                       id="contact-phone"
                       type="tel"
+                      maxLength={50}
                       placeholder="+1 (555) 000-0000"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -146,36 +191,22 @@ export default function ContactSection() {
                   </div>
 
                   <div>
-                    <label htmlFor="contact-budget" className="block text-xs font-condensed font-bold text-charcoal tracking-wider uppercase mb-2">
-                      ESTIMATED CAPITAL BUDGET
+                    <label htmlFor="contact-subject" className="block text-xs font-condensed font-bold text-charcoal tracking-wider uppercase mb-2">
+                      PROJECT CATEGORY / SUBJECT
                     </label>
-                    <input
-                      id="contact-budget"
-                      type="text"
-                      placeholder="e.g. $100M - $500M+"
-                      value={formData.budget}
-                      onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
+                    <select
+                      id="contact-subject"
+                      value={formData.subject}
+                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                       className="w-full bg-off-white border border-charcoal/20 px-4 py-3 text-sm text-charcoal font-sans focus:outline-none focus:border-amber-gold"
-                    />
+                    >
+                      {PROJECT_TYPES.map((type) => (
+                        <option key={type} value={type}>
+                          {type}
+                        </option>
+                      ))}
+                    </select>
                   </div>
-                </div>
-
-                <div>
-                  <label htmlFor="contact-project-type" className="block text-xs font-condensed font-bold text-charcoal tracking-wider uppercase mb-2">
-                    PROJECT CATEGORY
-                  </label>
-                  <select
-                    id="contact-project-type"
-                    value={formData.projectType}
-                    onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
-                    className="w-full bg-off-white border border-charcoal/20 px-4 py-3 text-sm text-charcoal font-sans focus:outline-none focus:border-amber-gold"
-                  >
-                    {PROJECT_TYPES.map((type) => (
-                      <option key={type} value={type}>
-                        {type}
-                      </option>
-                    ))}
-                  </select>
                 </div>
 
                 <div>
@@ -185,6 +216,7 @@ export default function ContactSection() {
                   <textarea
                     id="contact-message"
                     required
+                    maxLength={5000}
                     rows={4}
                     placeholder="Provide site location, target timeline, key technical requirements, and RFQ documentation links..."
                     value={formData.message}
@@ -195,11 +227,21 @@ export default function ContactSection() {
 
                 <button
                   type="submit"
-                  className="w-full bg-charcoal hover:bg-charcoal-dark text-amber-gold font-condensed font-extrabold text-sm tracking-wider uppercase py-4 transition-colors flex items-center justify-center gap-2 shadow-lg"
+                  disabled={loading}
+                  className="w-full bg-charcoal hover:bg-charcoal-dark text-amber-gold font-condensed font-extrabold text-sm tracking-wider uppercase py-4 transition-colors flex items-center justify-center gap-2 shadow-lg disabled:opacity-50 cursor-pointer"
                   id="submit-contact-form"
                 >
-                  <span>SUBMIT CAPITAL PROJECT INQUIRY</span>
-                  <Send className="w-4 h-4 text-amber-gold" />
+                  {loading ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin text-amber-gold" />
+                      <span>TRANSMITTING INQUIRY...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>SUBMIT CAPITAL PROJECT INQUIRY</span>
+                      <Send className="w-4 h-4 text-amber-gold" />
+                    </>
+                  )}
                 </button>
               </form>
             )}

@@ -152,7 +152,7 @@ export default function Services() {
                   {/* Bottom Content Area */}
                   <div className="relative z-10 p-4 sm:p-5">
                     <div className="text-[9px] font-mono font-bold text-amber-gold tracking-widest uppercase mb-1">
-                      {service.num} // {service.subtitle}
+                      {service.num}{" // "}{service.subtitle}
                     </div>
 
                     <h3 className="font-condensed font-black text-lg sm:text-xl text-white uppercase leading-none mb-2.5 group-hover:text-amber-gold transition-colors">

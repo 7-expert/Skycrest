@@ -64,7 +64,7 @@ export default function ClientsTestimonials() {
               <Quote className="w-10 h-10 text-amber-gold/20 absolute top-8 right-8" />
 
               <p className="text-base sm:text-lg text-off-white font-light italic leading-relaxed mb-8">
-                "{item.quote}"
+                &quot;{item.quote}&quot;
               </p>
 
               <div className="pt-6 border-t border-steel-border/60 flex items-center justify-between">
