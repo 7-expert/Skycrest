@@ -97,7 +97,7 @@ export default async function AdminLoginPage({ searchParams }) {
                 name="email"
                 type="email"
                 required
-                placeholder="admin@skycrest-eng.com"
+                placeholder="Enter admin email"
                 className="w-full bg-[#242427] border border-white/15 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#F59E0B] focus:ring-1 focus:ring-[#F59E0B] transition-all"
               />
             </div>

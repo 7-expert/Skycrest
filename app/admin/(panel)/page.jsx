@@ -95,7 +95,7 @@ export default async function AdminDashboardPage() {
 
       {/* Latest Messages Summary Card */}
       <div className="bg-[#18181b] border border-[#27272a] rounded-2xl p-6 shadow-xl space-y-6">
-        <div className="flex items-center justify-between pb-4 border-b border-[#27272a]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#27272a]">
           <div>
             <h2 className="font-condensed font-extrabold text-xl uppercase text-white">
               RECENT CAPITAL INQUIRIES
